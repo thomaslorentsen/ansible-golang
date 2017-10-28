@@ -1,5 +1,5 @@
 ---
 - hosts: localhost
   roles:
-    - {role: ansible-golang, go_install_path: "~/go"}
+    - {role: ansible-golang, go_install_path: "~/"}
 ...
