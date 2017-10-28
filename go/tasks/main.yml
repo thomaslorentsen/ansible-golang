@@ -1,0 +1,31 @@
+---
+- stat:
+    path: /usr/local/go/bin/go
+  register: go_installed
+  tags:
+    - golang
+
+- name: extract go package
+  unarchive:
+    src: "{{ go_binary }}"
+    dest: /usr/local/
+    remote_src: yes
+  when: go_installed.stat.exists == false
+  tags:
+    - golang
+
+- name: make go executable
+  file:
+    path: /usr/local/go/bin/go
+    mode: a+x
+  tags:
+    - golang
+
+- name: link to binary
+  file:
+    path: /usr/local/bin/go
+    src: /usr/local/go/bin/go
+    state: link
+  tags:
+    - golang
+...
