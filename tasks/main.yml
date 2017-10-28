@@ -5,6 +5,11 @@
   tags:
     - golang
 
+- name: download package
+  get_url:
+    src: "{{ go_binary }}"
+    dest: /tmp/go1.8.linux-amd64.tar.gz
+
 - name: extract go package
   unarchive:
     src: "{{ go_binary }}"
