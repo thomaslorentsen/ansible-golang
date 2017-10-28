@@ -1,6 +1,6 @@
 ---
 - stat:
-    path: /usr/local/go/bin/go
+    path: "{{ go_install_path }}go/bin/go"
   register: go_installed
   tags:
     - golang
@@ -16,7 +16,7 @@
 - name: extract go package
   unarchive:
     src: /tmp/go1.8.linux-amd64.tar.gz
-    dest: /usr/local/
+    dest: "{{ go_install_path }}"
     remote_src: yes
   when: go_installed.stat.exists == false
   tags:
@@ -24,15 +24,15 @@
 
 - name: make go executable
   file:
-    path: /usr/local/go/bin/go
+    path: "{{ go_install_path }}go/bin/go"
     mode: a+x
   tags:
     - golang
 
 - name: link to binary
   file:
-    path: /usr/local/bin/go
-    src: /usr/local/go/bin/go
+    path: "{{ go_install_path }}bin/go"
+    src: "{{ go_install_path }}go/bin/go"
     state: link
   tags:
     - golang
