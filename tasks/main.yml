@@ -7,12 +7,15 @@
 
 - name: download package
   get_url:
-    src: "{{ go_binary }}"
+    url: "{{ go_binary }}"
     dest: /tmp/go1.8.linux-amd64.tar.gz
+  when: go_installed.stat.exists == false
+  tags:
+    - golang
 
 - name: extract go package
   unarchive:
-    src: "{{ go_binary }}"
+    src: /tmp/go1.8.linux-amd64.tar.gz
     dest: /usr/local/
     remote_src: yes
   when: go_installed.stat.exists == false
